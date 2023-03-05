@@ -47,15 +47,9 @@ INSTALLED_APPS = [
     'reviews.apps.ReviewsConfig',
     'cities.apps.CitiesConfig',
     'chat.apps.ChatConfig',
-    "debug_toolbar",
     'robots',
 ]
 
-INTERNAL_IPS = [
-    # ...
-    "192.168.1.123",
-    # ...
-]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -65,7 +59,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = 'core.urls'

@@ -44,7 +44,6 @@ urlpatterns = [
     path('', include('property.urls', namespace='property')),
     path('', include('reviews.urls', namespace='reviews')),
     path('', include('chat.urls', namespace='chat')),
-    path('__debug__/', include('debug_toolbar.urls')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     re_path(r'^robots\.txt', include('robots.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL,
