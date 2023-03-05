@@ -1,0 +1,188 @@
+{% load static %}
+<div class="card mb-3 card-background">
+    <div class="row g-0">
+        <div class="col-md-4">
+        {% if ads.announcement_images.count > 0 %}
+            <div id="carouselExampleIndicators-{{ ads.id }}" class="carousel slide">
+                <div class="carousel-indicators mb-0">
+                    {% for image in ads.announcement_images.all %}
+                        <button type="button" data-bs-target="#carouselExampleIndicators-{{ ads.id }}"
+                                data-bs-slide-to="{{ forloop.counter0 }}"
+                                {% if forloop.counter0 == 0 %}class="active" aria-current="true"{% endif %}
+                                aria-label="Slide {{ forloop.counter0 }}"></button>
+                    {% endfor %}
+                </div>
+                <div class="carousel-inner">
+                    {% for image in ads.announcement_images.all %}
+                        <div class="carousel-item {% if forloop.counter0 == 0 %}active{% endif %}">
+                            <a href="{% url 'ads:announcement_detail' ads.slug %}" class="text-decoration-none">
+                                <img src="{{ image.image.url }}" class="d-block w-100 card-image" alt="...">
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators-{{ ads.id }}"
+                        data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators-{{ ads.id }}"
+                        data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+            {% else %}
+            <a href="{% url 'ads:announcement_detail' ads.slug %}" class="text-decoration-none">
+                <img src="{% static 'img/no_image.svg' %}" class="d-block w-100 card-image object-fit-contain" alt="...">
+            </a>
+        {% endif %}
+           {% if ads.standard or ads.standard.auto or ads.standard.moto %}
+            <div class="position-absolute top-0 p-2">
+                <span class="badge bg-mint">{{ ads.standard.get_condition_display }}{{ ads.automoto.get_condition_display }}</span>
+            </div>
+               {% elif ads.properties %}
+                <div class="position-absolute top-0 p-2 d-lg-none d-xl-none d-xxl-none">
+                <span class="badge bg-mint">{{ ads.properties.get_ad_type_display }}</span>
+            </div>
+            {% endif %}
+            <div class="position-absolute top-0 end-0 p-2">
+                {% if section == "user_ads" and request.user.is_authenticated %}
+                    {% include 'accounts/dashboard/partial/dropdown.html' %}
+                {% else %}
+                    {% url 'ads:ann_wishlist' as ann_wishlist %}
+                    {% include 'ads/partial/wishlist_form.html' with url=ann_wishlist %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <a href="{% url 'ads:announcement_detail' ads.slug %}" class="text-decoration-none text-dark">
+                    <h5 class="card-title text-white text-truncate">{{ ads.title|capfirst }}</h5>
+                </a>
+                <h5 class="card-text fw-bold c-mint">
+                    ${{ ads.price|floatformat:"-3g" }}
+                    {% if ads.jobs %}<span class="extra-small">/ hour</span>{% endif %}
+                    {% if ads.standard.auto.ad_type == "RE" or ads.standard.moto.ad_type == "RE" %}<span class="extra-small">/ day</span>{% endif %}
+                    {% if ads.properties.ad_type == "RE" %}<span class="extra-small">/ month</span>{% endif %}
+                </h5>
+                <div class="d-flex flex-row justify-content-between">
+                    <div>
+                        <p class="card-text"><i class="bi bi-geo-alt-fill"></i> {{ ads.city }}</p>
+                    </div>
+                    <div>
+                        <p>
+                         {{ ads.created_at|date:"M d, Y" }} {{ ads.created_at|time:"H:i" }}
+                        </p>
+                    </div>
+                </div>
+                <div class="row text-center">
+                    {% if ads.standard.auto or ads.standard.moto %}
+                        <div class="col-4 col-lg-3">
+                            <div class="card card-icon">
+                                <div class="card-body p-2">
+                                    <i class="bi bi-speedometer2 h4"></i>
+                                    <h6 class="card-subtitle mt-1 fs75 fw-bold">{{ ads.standard.moto.kms_driven }}{{ ads.standard.auto.kms_driven }} km</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4 col-lg-3">
+                            <div class="card card-icon">
+                                <div class="card-body p-2">
+                                    <i class="bi bi-bezier2 h4"></i>
+                                    <h6 class="card-subtitle mt-1 fs75 fw-bold">{{ ads.standard.moto.get_transmission_display }}{{ ads.standard.auto.get_transmission_display }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4 col-lg-3">
+                            <div class="card card-icon">
+                                <div class="card-body p-2">
+                                    <i class="bi bi-fuel-pump h4"></i>
+                                    <h6 class="card-subtitle mt-1 fs75 fw-bold">{{ ads.standard.moto.get_fuel_display }}{{ ads.standard.auto.get_fuel_display }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4 col-lg-3 d-none d-lg-block d-xl-block d-xxl-block">
+                            <div class="card card-icon">
+                                <div class="card-body p-2">
+                                    <i class="bi {% if ads.standard.auto %}bi-car-front{% else %}bi-bicycle{% endif %} h4"></i>
+                                    <h6 class="card-subtitle mt-1 fs75 fw-bold">{{ ads.standard.moto.get_ad_type_display }}{{ ads.standard.auto.get_ad_type_display }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if ads.properties.house %}
+                        <div class="col-4 col-lg-3">
+                            <div class="card card-icon">
+                                <div class="card-body p-2">
+                                    <i class="bi bi-box-seam h4"></i>
+                                    <h6 class="card-subtitle mt-1 fs75 fw-bold">{{ ads.properties.house.bedrooms }} Bedrooms</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4 col-lg-3">
+                            <div class="card card-icon">
+                                <div class="card-body p-2">
+                                    <i class="bi bi-grid-1x2 h4"></i>
+                                    <h6 class="card-subtitle mt-1 fs75 fw-bold">{{ ads.properties.house.bathrooms }} Bathrooms</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4 col-lg-3">
+                            <div class="card card-icon">
+                                <div class="card-body p-2">
+                                    <i class="bi bi-bounding-box-circles h4"></i>
+                                    <h6 class="card-subtitle mt-1 fs75 fw-bold">{{ ads.properties.square_feet }} sq</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4 col-lg-3 d-none d-lg-block d-xl-block d-xxl-block">
+                            <div class="card card-icon">
+                                <div class="card-body p-2">
+                                    <i class="bi bi-house h4"></i>
+                                    <h6 class="card-subtitle mt-1 fs75 fw-bold">{{ ads.properties.get_ad_type_display }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% if ads.properties and not ads.properties.house %}
+                        <div class="col-3">
+                            <div class="card card-icon">
+                                <div class="card-body p-2">
+                                    <i class="bi bi-bounding-box-circles h4"></i>
+                                    <h6 class="card-subtitle mt-1 fs75 fw-bold">{{ ads.properties.square_feet }} sq</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 d-none d-lg-block d-xl-block d-xxl-block">
+                            <div class="card card-icon">
+                                <div class="card-body p-2">
+                                    <i class="bi bi-house h4"></i>
+                                    <h6 class="card-subtitle mt-1 fs75 fw-bold">{{ ads.properties.get_ad_type_display }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                   {% if ads.jobs %}
+                    <div class="col-4 col-lg-3">
+                            <div class="card card-icon">
+                                <div class="card-body p-2">
+                                    <i class="bi bi-clock-history h4"></i>
+                                    <h6 class="card-subtitle mt-1 fs75 fw-bold">{{ ads.jobs.get_schedule_display }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                       <div class="col-4 col-lg-3">
+                            <div class="card card-icon">
+                                <div class="card-body p-2">
+                                    <i class="bi bi-option h4"></i>
+                                    <h6 class="card-subtitle mt-1 fs75 fw-bold">{{ ads.jobs.get_level_display }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

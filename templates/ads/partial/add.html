@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Cookies{% endblock %}
+{% block description %}Cookies{% endblock %}
+{% block keywords %}Cookies{% endblock %}
+{% block ogtitle %}Cookies{% endblock %}
+{% block ogdescription %}Cookies{% endblock %}
+{% block javascript %}
+    {% if section == "add_property" or section == "add_apartments" or section == "add_auto" or section == "add_moto" or section == "update_property_ad" or section == "update_apartments_ad" or section == "update_auto_ad" or section == "update_moto_ad" %}
+        <script src="{% static 'js/jquery.js' %}"></script>
+        <script src="{% static 'js/radio_type.js' %}"></script>
+    {% endif %}
+{% endblock %}
+{% block content %}
+    <div class="row text-white">
+        <h2>{{ title }}</h2>
+        <p class="mb-4">{{ paragraf }}</p>
+        <div class="row">
+            <div class="col-lg-8">
+                <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-root-margin="-20% 0px -70%"
+                     data-bs-smooth-scroll="true" class="scrollspy-example" tabindex="0">
+                    <form method="post" autocomplete="off" id="form">
+                        {% csrf_token %}
+                        {% include 'ads/partial/form/basic_info.html' %}
+                        {% include 'ads/partial/form/price_info.html' %}
+                        {% if section == "add_property" or section == "add_apartments" or section == "update_property_ad" or section == "update_apartments_ad" %}
+                            {% include 'ads/partial/form/property_info.html' %}
+                        {% elif section == "add_auto" or section == "update_auto_ad" or section == "add_moto" or section == "update_moto_ad" %}
+                            {% include 'ads/partial/form/vehicle_info.html' %}
+                        {% elif section == "add_job" or section == "update_job_ad" %}
+                            {% include 'ads/partial/form/jobs_info.html' %}
+                        {% endif %}
+                        {% include 'ads/partial/form/location_info.html' %}
+                        {% include 'ads/partial/form/contacts_info.html' %}
+                        <button class="btn btn-primary btn-lg" type="submit">{{ button_submit }}</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-4 d-none d-lg-block">
+                <div class="sticky-top top-custom">
+                    <div id="list-example" class="list-group">
+                        {% include 'ads/partial/scrollspy/basic_info.html' %}
+                        {% include 'ads/partial/scrollspy/price_info.html' %}
+                        {% if section == "add_property" or section == "add_apartments" or section == "update_property_ad" or section == "update_apartments_ad" %}
+                            {% include 'ads/partial/scrollspy/property_info.html' %}
+                        {% elif section == "add_auto" or section == "update_auto_ad" or section == "add_moto" or section == "update_moto_ad" %}
+                            {% include 'ads/partial/scrollspy/vehicle_info.html' %}
+                        {% elif section == "add_job" or section == "update_job_ad" %}
+                            {% include 'ads/partial/scrollspy/jobs_info.html' %}
+                        {% endif %}
+                        {% include 'ads/partial/scrollspy/location_info.html' %}
+                        {% include 'ads/partial/scrollspy/contacts_info.html' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

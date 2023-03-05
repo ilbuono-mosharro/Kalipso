@@ -1,0 +1,61 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-dark body-background fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'pages:home' %}">
+            <i class="bi bi-h-circle"></i> Kalipso
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
+                aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link text-white" aria-current="page" href="{% url 'pages:home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="">How it works</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="">Blog</a>
+                </li>
+            </ul>
+            {% if request.user.is_authenticated %}
+                <div class="dropdown text-end">
+                    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle text-start"
+                       id="dropdownUser1"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="{% if request.user.user_profile_related.avatar %}{{ request.user.user_profile_related.avatar.url }}{% else %}{% static 'img/male_avatar.svg' %}{% endif %}"
+                             alt="mdo" width="32" height="32" class="rounded-circle">
+                    </a>
+                    <ul class="dropdown-menu text-small ms-minus-3" aria-labelledby="dropdownUser1">
+                        <li><a class="dropdown-item" href="{% url 'accounts:update_profile' %}">Dashboard</a></li>
+                        <li><a class="dropdown-item" href="{% url 'chat:conversations' %}">Messages</a></li>
+                        <li><a class="dropdown-item" href="{% url 'categories:categories_list' %}">Post ad</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="{% url 'logout' %}">Sign out</a></li>
+                    </ul>
+                </div>
+            {% else %}
+                <div class="d-grid gap-2 d-md-block">
+                    <a href="{% url 'login' %}" class="btn btn-link fw-bold text-decoration-none text-white">
+                        <i class="bi bi-unlock"></i> Login
+                    </a>
+                    <a href="{% url 'accounts:sign_up' %}"
+                       class="btn btn-link fw-bold text-decoration-none text-white">
+                        <i class="bi bi-person-plus"></i> Sign up
+                    </a>
+                    <a href="{% url 'categories:categories_list' %}"
+                       class="btn btn-success btn-orange rounded-3 fw-bold">
+                        <i class="bi bi-plus"></i> Post ad
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</nav>

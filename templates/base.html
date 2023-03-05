@@ -1,0 +1,22 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    {% include 'partial/head.html' %}
+    <title>{% block title %}{% endblock %}</title>
+    {% block css %}{% endblock %}
+</head>
+<body class="body-background">
+{% include 'partial/navbar.html' %}
+<main>
+    <div class="container py-5 mt-6">
+        {% include 'partial/messagges.html' %}
+        {% block content %}
+        {% endblock %}
+    </div>
+</main>
+{% include 'partial/footer.html' %}
+{% include 'partial/scripts.html' %}
+{% block javascript %}{% endblock %}
+</body>
+</html>

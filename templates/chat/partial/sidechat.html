@@ -1,0 +1,43 @@
+{% load static %}
+<div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0 {{ display }}">
+    <div class="p-1">
+        <h5 class="p-1 mb-4">Active chats {{ objects_list|length }}</h5>
+        <div class="overflow-auto h-500 myscrollbar">
+            <ul class="list-unstyled mb-0">
+                {% for conver_sation in objects_list %}
+                    <li class="p-2 border-bottom border-color-cs {% if conver_sation.id == conversation.id %}active-chat{% endif %}">
+                        <a href="{% url 'chat:get_conversation' conver_sation.id %}"
+                           class="d-flex justify-content-between text-decoration-none">
+                            <div class="d-flex flex-row">
+                                {% for participant in conver_sation.participants.all %}
+                                    {% if participant.id != request.user.id %}
+                                        <div>
+                                            <img src="{% if participant.user_profile_related.avatar %}{{ participant.user_profile_related.avatar.url }}{% else %}{% static 'img/male_avatar.svg' %}{% endif %}"
+                                                 alt="avatar"
+                                                 class="d-flex align-self-center me-3 rounded-circle"
+                                                 width="50" height="50">
+                                        </div>
+                                        <div class="pt-1 text-white">
+                                            <p class="fw-bold mb-0">{{ participant.get_full_name }}</p>
+                                            <p class="small">{{ conver_sation.messages.last.content|truncatechars:25 }}</p>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <div class="pt-1 text-white">
+                                <p class="small mb-1">
+                                    {{ conver_sation.messages.last.timestamp|timesince }} ago
+                                </p>
+                                {% if conver_sation.unread_messages > 0 %}
+                                    <span class="badge bg-danger rounded-pill float-end">
+                                        {{ conver_sation.unread_messages }}
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>

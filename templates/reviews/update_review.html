@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Request a new password{% endblock %}
+{% block description %}Request a new password{% endblock %}
+{% block keywords %}Request a new password{% endblock %}
+{% block ogtitle %}Request a new password{% endblock %}
+{% block ogdescription %}Request a new password{% endblock %}
+{% block content %}
+    <section class="update-review">
+        <div class="row">
+            <div class="card card-background w-50 mx-auto">
+                <div class="card-body p-5">
+                    <h5 class="card-title">Update your review</h5>
+                    <form action="{% url 'accounts:update_review' review.id %}" method="post">
+                        {% csrf_token %}
+                        <div class="rate mb-3">
+                            <input type="radio" name="rating" id="rating_5" value="5" required/>
+                            <label for="rating_5">
+                                <i class="bi bi-star-fill fs-2"></i>
+                            </label>
+                            <input type="radio" name="rating" id="rating_4" value="4" required/>
+                            <label for="rating_4">
+                                <i class="bi bi-star-fill fs-2"></i>
+                            </label>
+                            <input type="radio" name="rating" id="rating_3" value="3" required/>
+                            <label for="rating_3">
+                                <i class="bi bi-star-fill fs-2"></i>
+                            </label>
+                            <input type="radio" name="rating" id="rating_2" value="2" required/>
+                            <label for="rating_2">
+                                <i class="bi bi-star-fill fs-2"></i>
+                            </label>
+                            <input type="radio" name="rating" id="rating_1" value="1" required/>
+                            <label for="rating_1">
+                                <i class="bi bi-star-fill fs-2"></i>
+                            </label>
+                            {{ form.rating.errors }}
+                        </div>
+                        <div class="form-floating mb-3">
+                            {{ form.subject }}
+                            {{ form.subject.label_tag }}
+                            {{ form.subject.errors }}
+                        </div>
+                        <div class="form-floating mb-3">
+                            {{ form.review }}
+                            {{ form.review.label_tag }}
+                            {{ form.review.errors }}
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-lg">Update review</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

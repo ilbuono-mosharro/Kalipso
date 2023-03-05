@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block title %}login{% endblock %}
+{% block description %}login{% endblock %}
+{% block keywords %}login{% endblock %}
+{% block ogtitle %}login{% endblock %}
+{% block ogdescription %}login{% endblock %}
+{% load static %}
+{% block content %}
+    <div class="row g-lg-5 justify-content-center">
+        <div class="col-12">
+            <div class="card card-background">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-md-6 order-1 order-md-0 order-lg-0 order-xl-0 order-xxl-0">
+                            <div class="d-flex flex-column mb-3 border-right-end align-items-center border-color-cs">
+                                <div class="p-2 d-none d-lg-block d-xl-block d-xxl-block">
+                                    <h1 class="h3">Hey there!</h1>
+                                    <h2 class="h3">Welcome back.</h2>
+                                </div>
+                                <div class="p-2">
+                                    <img src="{% static 'img/login.svg' %}" alt="" height="292"
+                                         class="mx-auto w-100">
+                                </div>
+                                <div class="p-2">Don't have an account?
+                                    <a href="{% url 'accounts:sign_up' %}" class="text-white">Sign up here</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 order-0 order-md-1 order-lg-1 order-xl-1 order-xxl-1">
+                            <h2>Login</h2>
+                            <p>Buy and sell in a community with over 1 million users</p>
+                            {% if form.errors %}
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    Your username and password didn't match. Please try again.
+                                    <button type="button" class="btn-close not-focusable" data-bs-dismiss="alert"
+                                            aria-label="Close"></button>
+                                </div>
+                            {% endif %}
+                            {% if next %}
+                                {% if user.is_authenticated %}
+                                    <p>Your account doesn't have access to this page.
+                                        To proceed, please login with an account that has access.
+                                    </p>
+                                {% else %}
+                                    <p>Please login to see this page.</p>
+                                {% endif %}
+                            {% endif %}
+                            <!-- Form -->
+                            <form method="post" action="{% url 'login' %}" autocomplete="off" class="mb-4 col-lg-10">
+                                {% csrf_token %}
+                                <!-- Username -->
+                                <div class="mb-0">
+                                    <label for="id_username" class="invisible">Username</label>
+                                    <input type="text" name="username" autofocus="" class="form-control form-control-lg"
+                                           autocapitalize="none" autocomplete="username" maxlength="150" required=""
+                                           id="id_username" placeholder="Enter your username">
+                                </div>
+                                <!-- Password -->
+                                <div class="mb-3">
+                                    <label for="id_password" class="invisible">Password</label>
+                                    <input type="password" name="password" class="form-control form-control-lg"
+                                           autocomplete="current-password" required="" id="id_password"
+                                           placeholder="Enter your password">
+                                </div>
+                                <!-- Button -->
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary">
+                                        Sign in
+                                    </button>
+                                </div>
+                                <input type="hidden" name="next" value="{{ next }}">
+                            </form>
+                            <a href="{% url 'password_reset' %}" class="text-inherit text-white text-decoration-none">
+                                Forgot your password?
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

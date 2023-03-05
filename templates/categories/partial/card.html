@@ -1,0 +1,18 @@
+<div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 col-xxl-3">
+    <div class="card border-0 {{ category.bg_class_name }} mb-4">
+        <div class="card-header border-0 text-uppercase text-white fw-bold">
+            <div class="d-flex flex-row justify-content-center align-items-center">
+                <div class="p-1">
+                    <i class="{{ category.icon }} fs-2"></i>
+                </div>
+                <div class="p-2 fs-4" style="letter-spacing: 2px;">{{ category.name|capfirst }}</div>
+            </div>
+        </div>
+        <div class="card-body">
+            <a href="{% url 'ads:announcements_by_category' category.slug %}"
+               class="btn btn-outline-light fw-bold btn-sm w-100">
+                Search on {{ category.name|capfirst }}
+            </a>
+        </div>
+    </div>
+</div>

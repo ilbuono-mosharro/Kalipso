@@ -1,0 +1,49 @@
+<div class="card card-background mb-4" id="list-item-1">
+    <div class="card-body">
+        <h4 class="card-title mb-4"><i class="bi bi-info-circle"></i> Basic info</h4>
+        {% if section == "update_standard_ad" or section == "update_auto_ad" or section == "update_moto_ad" or section == "update_job_ad" or section == "update_property_ad" or section == "update_apartments_ad" %}
+            <div class="mb-3">
+                {{ form.category.label_tag }}
+                {{ form.category }}
+                <span class="text-danger">{{ form.category.errors }}</span>
+            </div>
+            <div class="mb-3">
+                {{ form.subcategory.label_tag }}
+                {{ form.subcategory }}
+                <span class="text-danger">{{ form.subcategory.errors }}</span>
+            </div>
+        {% endif %}
+        <div class="mb-3">
+            {% if section == "update_standard_ad" or section == "update_auto_ad" or section == "update_moto_ad" or section == "update_job_ad" or section == "update_property_ad" or section == "update_apartments_ad" %}
+                {{ form.title.label_tag }}
+            {% endif %}
+            {{ form.title }}
+            <span class="text-danger">{{ form.title.errors }}</span>
+        </div>
+        <div class="mb-3">
+            {% if section == "update_standard_ad" or section == "update_auto_ad" or section == "update_moto_ad" or section == "update_job_ad" or section == "update_property_ad" or section == "update_apartments_ad" %}
+                {{ form.description.label_tag }}
+            {% endif %}
+            {{ form.description }}
+            <span class="text-danger">{{ form.description.errors }}</span>
+        </div>
+        {% if section == "add_auto" or section == "update_auto_ad" or section == "add_moto" or section == "update_moto_ad" or section == "add_property" or section == "update_property_ad" or section == "add_apartments" or section == "update_apartments_ad" %}
+            <div class="mb-3">
+                <p>Select Type of ad</p>
+                {% for radio in form.ad_type %}
+                    {% if forloop.counter0 > 0 %}
+                        <div class="form-check form-check-inline">
+                            {{ radio }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if section == "add_auto" or section == "update_auto_ad" or section == "add_moto" or section == "update_moto_ad" or section == "add_standard" or section == "update_standard_ad" %}
+            <div class="mb-3">
+                {{ form.condition }}
+                <span class="text-danger">{{ form.condition.errors }}</span>
+            </div>
+        {% endif %}
+    </div>
+</div>

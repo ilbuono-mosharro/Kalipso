@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block javascript %}
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/wishlist.js' %}"></script>
+    {% if profile.phone %}
+        <script>
+            const phoneNumber = {{ profile.phone }};
+            $("#phone-number").click(function () {
+                $(this).text(phoneNumber);
+            });
+        </script>
+    {% endif %}
+{% endblock %}
+{% block content %}
+    <section class="profile-pb">
+        <div class="row">
+            <div class="col-lg-4 mb-3">
+                <div class="card card-background border-0 mb-4">
+                    <div class="card-body text-white">
+                        <p class="card-text">
+                            {{ profile.user.get_u_type_display }}
+                        </p>
+                        <div class="d-flex mb-4">
+                            <div class="flex-shrink-0">
+                                <img src="{% if profile.avatar %}{{ profile.avatar.url }}{% else %}{% static 'img/male_avatar.svg' %}{% endif %}"
+                                     class="rounded-4" alt="..." height="50" width="50">
+                            </div>
+                            <div class="flex-grow-1 ms-2">
+                                <h5 class="mb-0">{{ profile.user.get_full_name }}</h5>
+                                <i class="bi bi-geo-alt-fill"></i> {{ profile.city.name }}
+                            </div>
+                        </div>
+                        <ul class="list-unstyled mb-4">
+                            <li>Available Ads: {{ announcements|length }}</li>
+                        </ul>
+                        {% if profile.phone %}
+                            <button type="button" class="btn btn-outline-primary btn-outline-orange btn-lg mb-4"
+                                    id="phonenumber">
+                                +355 <span id="phone-number">****** - Click to show</span>
+                            </button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <h3 class="text-white mb-4">Available offers</h3>
+                {% for ads in announcements %}
+                    {% include 'ads/partial/card.html' %}
+                {% empty %}
+                    {% include 'partial/no_result_found.html' %}
+                {% endfor %}
+                <div class="row mt-5">
+                    {% if reviews %}
+                        <h3 class="mb-4 text-white">Reviews ({{ reviews|length }})</h3>
+                        <div class="col-12 mb-5">
+                            <div class="row align-items-center justify-content-end text-white">
+                                {% include 'reviews/partial/review_data.html' %}
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if request.user.is_authenticated %}
+                        {% if not user_review_exists %}
+                            <div class="text-end border-bottom border-color-cs mb-4">
+                                <button class="btn btn-primary w-25 btn-lg mb-4" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseExample" aria-expanded="false"
+                                        aria-controls="collapseExample">
+                                    <i class="bi bi-pencil-square"></i> Add review
+                                </button>
+                            </div>
+                            <div class="collapse" id="collapseExample">
+                                <div class="card card-body card-background">
+                                    <h5 class="card-title">Leave a review</h5>
+                                    <form action="{% url 'accounts:public_profile' profile.unique_code %}"
+                                          method="post">
+                                        {% csrf_token %}
+                                        <div class="rate mb-3">
+                                            <input type="radio" name="rating" id="rating_5" value="5" required/>
+                                            <label for="rating_5">
+                                                <i class="bi bi-star-fill fs-2"></i>
+                                            </label>
+                                            <input type="radio" name="rating" id="rating_4" value="4" required/>
+                                            <label for="rating_4">
+                                                <i class="bi bi-star-fill fs-2"></i>
+                                            </label>
+                                            <input type="radio" name="rating" id="rating_3" value="3" required/>
+                                            <label for="rating_3">
+                                                <i class="bi bi-star-fill fs-2"></i>
+                                            </label>
+                                            <input type="radio" name="rating" id="rating_2" value="2" required/>
+                                            <label for="rating_2">
+                                                <i class="bi bi-star-fill fs-2"></i>
+                                            </label>
+                                            <input type="radio" name="rating" id="rating_1" value="1" required/>
+                                            <label for="rating_1">
+                                                <i class="bi bi-star-fill fs-2"></i>
+                                            </label>
+                                            {{ form.rating.errors }}
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            {{ form.subject }}
+                                            {{ form.subject.label_tag }}
+                                            {{ form.subject.errors }}
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            {{ form.review }}
+                                            {{ form.review.label_tag }}
+                                            {{ form.review.errors }}
+                                        </div>
+                                        <button type="submit" class="btn btn-primary btn-lg">Submit a review</button>
+                                    </form>
+                                </div>
+                            </div>
+                        {% else %}
+                            <h5 class="text-white mb-4">
+                                You have already rated this profile,
+                                <a href="{% url 'accounts:user_reviews' %}">
+                                    click here
+                                </a>
+                                to edit your review.
+                            </h5>
+                        {% endif %}
+                    {% else %}
+                        <div class="text-end border-bottom border-color-cs mb-4">
+                            <a class="btn btn-primary w-25 btn-lg mb-4 "
+                               href="{% url 'login' %}?next={{ request.path }}">
+                                <i class="bi bi-pencil-square"></i> Add review
+                            </a>
+                        </div>
+                    {% endif %}
+                    <div class="col-12">
+                        {% for review in reviews %}
+                            <div class="d-flex text-white">
+                                <img src="{% if review.user.profile.avatar %}{{ review.user.profile.avatar.url }}{% else %}{% static 'img/male_avatar.svg' %}{% endif %}"
+                                     class="flex-shrink-0 me-3 rounded mx-auto d-block rounded-circle" alt="..."
+                                     width="50" height="50">
+                                <div class="w-100">
+                                    <h5 class="h-25">{{ review.user.get_full_name }}</h5>
+                                    <ul class="list-unstyled list-inline">
+                                        {% include 'reviews/partial/review_rating.html' with rating=review.rating %}
+                                    </ul>
+                                </div>
+                                <div class="flex-shrink-0 small">
+                                    {{ review.created_at|date:"M d, Y" }}
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column mb-5 border-bottom border-color-cs text-white">
+                                <div class="h5 bd-highlight">{{ review.subject }}</div>
+                                <div class="bd-highlight mb-4">{{ review.review }}</div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Server error 400{% endblock %}
+{% block description %}Server error 400{% endblock %}
+{% block keywords %}Server error 400{% endblock %}
+{% block ogtitle %}Server error 400{% endblock %}
+{% block ogdescription %}Server error 400{% endblock %}
+{% block content %}
+    <section id="error-400" class="px-xxl-4 px-xl-4 px-lg-4 mt-5">
+        <div class="mb-5 text-center">
+            <img src="{% static 'img/error_500.svg' %}" class="img-fluid errors-page " alt="Responsive image">
+            <h1 class="font-lora">Oops!</h1>
+            <h2 class="font-lora">Server error 400</h2>
+        </div>
+    </section>
+{% endblock %}

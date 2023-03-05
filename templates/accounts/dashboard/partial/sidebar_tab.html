@@ -1,0 +1,60 @@
+{% load static %}
+<div class="list-group">
+    <div class="card card-background">
+        <div class="card-body">
+            <p class="card-text">{{ request.user.get_u_type_display }} </p>
+            <div class="d-flex">
+                <div class="flex-shrink-0">
+                    <img src="{% if request.user.user_profile_related.company.avatar %}{{ request.user.user_profile_related.company.avatar.url }}{% elif request.user.user_profile_related.individual.avatar %}{{ request.user.user_profile_related.individual.avatar.url }}{% else %}{% static 'img/male_avatar.svg' %}{% endif %}"
+                         class="rounded-4" alt="..." height="50" width="50">
+                </div>
+                <div class="flex-grow-1 ms-2">
+                    <h5 class="mb-0">{{ request.user.get_full_name }}</h5>
+                    <ul class="list-unstyled">
+                        {% include 'reviews/partial/review_rating.html' with rating=request.user.user_profile_related.get_reviews_avg.review_avg %}
+                        <li class="list-inline-item small">
+                            ({{ request.user.user_profile_related.get_reviews_avg.review_number }}
+                            review{{ request.user.user_profile_related.get_reviews_avg.review_number|pluralize }})
+                        </li>
+                    </ul>
+                    <ul class="list-unstyled">
+                        <li>
+                            <i class="bi bi-phone"></i> +355 {{ request.user.user_profile_related.phone }}
+                            <i class="bi bi-eye"></i> {{ request.user.user_profile_related.hidden_phone }}
+                        </li>
+                        <li>
+                            <i class="bi bi-envelope"></i> {{ request.user.email }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <a href="{% url 'categories:categories_list' %}" class="btn btn-primary btn-orange btn-lg fw-bold w-100">
+                <i class="bi bi-plus"></i> Ad ad
+            </a>
+        </div>
+    </div>
+    <a href="{% url 'accounts:update_profile' %}"
+       class="list-group-item list-group-item-action border-end-0 p-3 card-background {% if section == "profile" %}border-left-active{% endif %}"
+       aria-current="true">
+        <i class="bi bi-person fs-5"></i> Personal Info
+    </a>
+    <a href="{% url 'password_change' %}"
+       class="list-group-item list-group-item-action border-end-0 p-3 card-background {% if request.path == "/accounts/password_change/" %}border-left-active{% endif %}">
+        <i class="bi bi-lock"></i> Password e security
+    </a>
+    <a href="{% url 'accounts:user_ads' %}"
+       class="list-group-item list-group-item-action border-end-0 p-3 card-background {% if section == "user_ads" %}border-left-active{% endif %}">
+        <i class="bi bi-list-ul"></i> My ads
+    </a>
+    <a href="{% url 'accounts:user_wishlist' %}"
+       class="list-group-item list-group-item-action border-end-0 p-3 card-background {% if section == "user_wish" %}border-left-active{% endif %}">
+        <i class="bi bi-suit-heart"></i> Wish list
+    </a>
+    <a href="{% url 'accounts:user_reviews' %}"
+       class="list-group-item list-group-item-action border-end-0 p-3 card-background {% if section == "user_review" %}border-left-active{% endif %}">
+        <i class="bi bi-star"></i> Reviews
+    </a>
+    <a href="{% url 'logout' %}" class="list-group-item list-group-item-action border-end-0 p-3 card-background">
+        <i class="bi bi-box-arrow-right"></i> Sign out
+    </a>
+</div>

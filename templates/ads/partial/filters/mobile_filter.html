@@ -1,0 +1,35 @@
+<button class="btn btn-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"  aria-controls="offcanvasExample">
+    Filtri
+</button>
+<div class="offcanvas offcanvas-start overflow-auto text-bg-dark" tabindex="-1" id="offcanvasExample"
+     aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Filters</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body ">
+        <div>
+            {% if subcategory.filter_condition or category_f.filter_condition %}
+                {% include 'ads/partial/filters/conditions.html' %}
+            {% endif %}
+            {% if subcategory.filter_ad_types or category_f.filter_ad_types %}
+                {% include 'ads/partial/filters/ad_types.html' %}
+            {% endif %}
+            {% if subcategory.filter_fuels or category_f.filter_fuels %}
+                {% include 'ads/partial/filters/fuels.html' %}
+            {% endif %}
+            {% if subcategory.filter_transmissions or category_f.filter_transmissions %}
+                {% include 'ads/partial/filters/transmissions.html' %}
+            {% endif %}
+            {% if subcategory.filter_price_min and subcategory.filter_price_max or category_f.filter_price_min and category_f.filter_price_max %}
+                {% include 'ads/partial/filters/price_filter.html' %}
+            {% endif %}
+            {% if subcategory.filter_schedules or category_f.filter_schedules %}
+                {% include 'ads/partial/filters/schedules.html' %}
+            {% endif %}
+            {% if subcategory.filter_levels or category_f.filter_levels %}
+                {% include 'ads/partial/filters/levels.html' %}
+            {% endif %}
+        </div>
+    </div>
+</div>

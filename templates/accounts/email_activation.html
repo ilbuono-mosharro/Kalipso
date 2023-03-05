@@ -1,0 +1,10 @@
+{% autoescape off %}
+    Hello nice to meet you {{ user.first_name }},
+
+    Click on the following link to confirm your registration:
+
+    http://{{ domain }}{% url 'accounts:activate_account' uidb64=uid token=token %}
+
+    A greeting,
+    The Staff of Kalipso
+{% endautoescape %}

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load query_helpers %}
+{% load detects_mobile %}
+{% block content %}
+    <section class="obj-{% if subcategory %}categories{% else %}-subcategories{% endif %}">
+        <div class="row">
+            {% include 'ads/partial/filters/search_form.html' %}
+            {% if not request|is_mobile %}
+                <div class="col-xxl-2 col-xl-2 col-lg-2 col-md-3 d-none d-sm-none d-md-block">
+                    {% if subcategory.filter_condition or category.filter_condition %}
+                        {% include 'ads/partial/filters/conditions.html' %}
+                    {% endif %}
+                    {% if subcategory.filter_ad_types or category.filter_ad_types %}
+                        {% include 'ads/partial/filters/ad_types.html' %}
+                    {% endif %}
+                    {% if subcategory.filter_fuels or category.filter_fuels %}
+                        {% include 'ads/partial/filters/fuels.html' %}
+                    {% endif %}
+                    {% if subcategory.filter_transmissions or category.filter_transmissions %}
+                        {% include 'ads/partial/filters/transmissions.html' %}
+                    {% endif %}
+                    {% if subcategory.filter_price_min and subcategory.filter_price_max or category.filter_price_min and category.filter_price_max %}
+                        {% include 'ads/partial/filters/price_filter.html' %}
+                    {% endif %}
+                    {% if subcategory.filter_schedules or category.filter_schedules %}
+                        {% include 'ads/partial/filters/schedules.html' %}
+                    {% endif %}
+                    {% if subcategory.filter_levels or category.filter_levels %}
+                        {% include 'ads/partial/filters/levels.html' %}
+                    {% endif %}
+                </div>
+            {% endif %}
+            <div class="col-xxl-10 col-xl-10 col-lg-10 col-md-9 col-sm-12 col-12">
+                <div class="d-flex flex-row mb-3 align-items-center">
+                    {% if request|is_mobile %}
+                        <div class="p-1 d-block d-sm-block d-md-none">
+                            {% include 'ads/partial/filters/mobile_filter.html' %}
+                        </div>
+                    {% endif %}
+                    <div class="p-1 text-white">
+                        <i class="bi bi-arrow-down-up"></i> Sort By:
+                    </div>
+                    <div class="p-1">
+                        {% include 'ads/partial/filters/sorting.html' %}
+                    </div>
+                    <div class="p-1 ms-auto text-white">
+                        {{ announcements|length }} offers
+                    </div>
+                </div>
+                {% for ads in announcements %}
+                    {% include 'ads/partial/card.html' %}
+                {% empty %}
+                    {% include 'partial/no_result_found.html' %}
+                {% endfor %}
+                {% include 'partial/pagination.html' with page_obj=announcements %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

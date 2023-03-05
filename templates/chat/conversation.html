@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load conversation_filters %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-background">
+                <div class="card-body">
+                    <div class="d-flex flex-row mb-3 justify-content-between">
+                        <div class="p-2">
+                            <a href="{% url 'chat:conversations' %}" class="text-decoration-none text-white">
+                                <i class="bi bi-chevron-left"></i>
+                            </a>
+                        </div>
+                        <div class="p-2 d-lg-none">
+                            {% with other_participant=conversation|other_participant:request.user %}
+                                You are chatting with {{ other_participant.username }}
+                            {% endwith %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        {% include 'chat/partial/sidechat.html' with display="d-none d-lg-block" %}
+                        <div class="col-lg-7 col-xl-8">
+                            <div class="overflow-auto h-500 myscrollbar d-flex flex-column-reverse">
+                                <div class="pt-3 pe-3">
+                                    <p class="small text-center mb-4">{{ conversation.subject }}</p>
+                                    {% for message in conversation.messages.all %}
+                                        {% ifchanged message.timestamp.date %}
+                                            <p class="small text-center mb-4">{{ message.timestamp|date:"l, M j Y" }}</p>
+                                        {% endifchanged %}
+                                        {% if message.sender == request.user %}
+                                            <div class="d-flex mb-4">
+                                                <div class="flex-shrink-0 align-self-end">
+                                                    <img src="{% if message.sender.user_profile_related.avatar %}{{ message.sender.user_profile_related.avatar.url }}{% else %}{% static 'img/male_avatar.svg' %}{% endif %}"
+                                                         class="rounded-circle"
+                                                         alt="avatar 1" style="width: 44px; height: 44px;">
+                                                </div>
+                                                <div class="flex-grow-1 ms-2">
+                                                    <p class="p-3 rounded-3 bg-primary me-18 mb-1">{{ message.content }}</p>
+                                                    <p class="small extra-small mb-1">{{ message.timestamp|date:"H:i A" }}</p>
+                                                </div>
+                                            </div>
+                                        {% else %}
+                                            <div class="d-flex mb-4">
+                                                <div class="flex-grow-1 ms-15 mb-0 me-2">
+                                                    <p class="p-3 rounded-3 bg-primary mb-1">{{ message.content }}</p>
+                                                    <p class="small extra-small text-end mb-1">{{ message.timestamp|date:"H:i A" }}</p>
+                                                </div>
+                                                <div class="flex-shrink-0 align-self-end">
+                                                    <img src="{% if message.sender.user_profile_related.avatar %}{{ message.sender.user_profile_related.avatar.url }}{% else %}{% static 'img/male_avatar.svg' %}{% endif %}"
+                                                         class="rounded-circle"
+                                                         alt="avatar 2" style="width: 44px; height: 44px;">
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <form action="{% url 'chat:get_conversation' conversation.id %}" method="post">
+                                {% csrf_token %}
+                                <div class="text-muted d-flex justify-content-start align-items-center pe-3 pt-3 mt-2">
+                                    <img src="{% if request.user.user_profile_related.avatar %}{{ request.user.user_profile_related.avatar.url }}{% else %}{% static 'img/male_avatar.svg' %}{% endif %}"
+                                         class="rounded-circle me-2"
+                                         alt="avatar 3" style="width: 44px; height: 35px;">
+                                    <label for="exampleFormControlInput2" class="invisible"></label>
+                                    <input type="text" class="form-control form-control-lg me-2"
+                                           id="exampleFormControlInput2" placeholder="Type message" name="content">
+                                    <button type="submit" class="btn btn-primary"><i class="bi bi-send"></i></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

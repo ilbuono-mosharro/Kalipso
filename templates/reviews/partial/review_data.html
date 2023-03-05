@@ -1,0 +1,19 @@
+{% load percentuage_rating %}
+{% for review in reviews_data %}
+    <div class="col-4 col-lg-3 col-xl-2">
+        <ul class="list-unstyled list-inline mb-0">
+            {% include 'reviews/partial/review_rating.html' with rating=review.rating %}
+        </ul>
+    </div>
+    <div class="col-7 col-lg-8 col-xl-9">
+        <div class="progress border-radius-15">
+            <div class="progress-bar color-green-bg" role="progressbar"
+                 style="width:{{ review.count|calculate_percentage:reviews.count }}%"
+                 aria-valuenow="{{ review.count|calculate_percentage:reviews.count }}" aria-valuemin="0"
+                 aria-valuemax="100"></div>
+        </div>
+    </div>
+    <div class="col-1">
+        {{ review.count|calculate_percentage:reviews.count }}%
+    </div>
+{% endfor %}

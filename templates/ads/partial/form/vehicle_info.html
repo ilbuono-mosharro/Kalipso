@@ -1,0 +1,61 @@
+<div class="card card-background mb-4" id="list-item-3">
+    <div class="card-body">
+        <h4 class="card-title mb-4"><i class="bi bi-fan"></i> Vehicle information</h4>
+        <div class="mb-3">
+            {% if section == "update_auto_ad" or section == "update_moto_ad" %}
+                {{ form.make.label_tag }}
+            {% endif %}
+            {{ form.make }}
+            <span class="text-danger">{{ form.make.errors }}</span>
+        </div>
+        <div class="mb-3">
+            {{ form.fuel }}
+            <span class="text-danger">{{ form.fuel.errors }}</span>
+        </div>
+        <div class="mb-3">
+            {{ form.transmission }}
+            <span class="text-danger">{{ form.transmission.errors }}</span>
+        </div>
+        <div class="mb-3">
+            {% if section == "update_auto_ad" or section == "update_moto_ad" %}
+                {{ form.consumption.label_tag }}
+            {% endif %}
+            {{ form.consumption }}
+            <span class="text-danger">{{ form.consumption.errors }}</span>
+        </div>
+        <div class="mb-3">
+            {% if section == "update_auto_ad" or section == "update_moto_ad" %}
+                {{ form.kms_driven.label_tag }}
+            {% endif %}
+            {{ form.kms_driven }}
+            <span class="text-danger">{{ form.kms_driven.errors }}</span>
+        </div>
+        <div class="mb-3">
+            {% if section == "update_auto_ad" or section == "update_moto_ad" %}
+                {{ form.first_registration.label_tag }}
+            {% endif %}
+            {{ form.first_registration }}
+            <span class="text-danger">{{ form.first_registration.errors }}</span>
+        </div>
+        {% if section == "add_auto" or section == "update_auto_ad" %}
+            <div class="mb-3">
+                {% if section == "update_auto_ad" %}
+                    {{ form.doors.label_tag }}
+                {% endif %}
+                {{ form.doors }}
+                <span class="text-danger">{{ form.doors.errors }}</span>
+            </div>
+            <div class="mb-3">
+                {% if section == "update_auto_ad" %}
+                    {{ form.seats.label_tag }}
+                {% endif %}
+                {{ form.seats }}
+                <span class="text-danger">{{ form.seats.errors }}</span>
+            </div>
+            <div class="mb-3">
+                {{ form.drive_type }}
+                <span class="text-danger">{{ form.drive_type.errors }}</span>
+            </div>
+        {% endif %}
+    </div>
+</div>

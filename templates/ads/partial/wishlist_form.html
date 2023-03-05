@@ -1,0 +1,14 @@
+<form action="{{ url }}" method="post" class="favorite-form"
+      id="{{ ads.id }}">
+    {% csrf_token %}
+    <label for="{{ ads.id }}" class="invisible">
+        <input type="text" name="annuncement" value="{{ ads.id }}" id="{{ ads.id }}" hidden>
+    </label>
+    <button class="mb-0 btn btn-light btn-sm rounded-circle" type="submit">
+        {% if request.user in ads.users_wishlist.all %}
+            <i class="bi bi-heart-fill text-danger align-middle" id="heart-{{ ads.id }}"></i>
+        {% else %}
+            <i class="bi bi-heart align-middle" id="heart-{{ ads.id }}"></i>
+        {% endif %}
+    </button>
+</form>

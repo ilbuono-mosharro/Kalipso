@@ -1,0 +1,46 @@
+<div class="dropdown">
+    <button class="btn btn-dark dropdown-toggle dropdown-three-dots" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="bi bi-three-dots-vertical"></i>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-dark">
+        <li>
+            <a class="dropdown-item"
+                    {% if ads.standard.auto %}
+               href="{% url 'engines:update_announcement_auto' ads.id %}"
+                    {% elif ads.standard.moto %}
+               href="{% url 'engines:update_announcement_moto' ads.id %}"
+                    {% elif ads.jobs %}
+               href="{% url 'jobs:update_announcement_job' ads.id %}"
+                    {% elif ads.properties.house %}
+               href="{% url 'property:update_announcement_apartments' ads.id %}"
+                    {% elif ads.properties and not ads.properties.house %}
+               href="{% url 'property:update_announcement_property' ads.id %}"
+                    {% else %}
+               href="{% url 'ads:update_standard_announcement' ads.id %}"
+                    {% endif %}> <i class="bi bi-pencil-square"></i> Edit
+            </a>
+        </li>
+        <li>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn bdropdown-item color-text-dropdown" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal-{{ ads.id }}">
+                <i class="bi bi-power"></i> Deactive
+            </button>
+        </li>
+        <li>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn bdropdown-item color-text-dropdown" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal-{{ ads.slug }}">
+                <i class="bi bi-trash3"></i> Delete
+            </button>
+        </li>
+    </ul>
+</div>
+{% url 'ads:change_status_announcement' ads.id as change_status %}
+{% with title='Are you sure you want to make this change?' description='If you change your mind, you can change the status of your ad again.' %}
+    {% include 'partial/modal.html' with modal_id=ads.id title=title description=description action_url=change_status %}
+{% endwith %}
+{% url 'ads:delete_announcement' ads.id as delete_ads %}
+{% with title='Are you sure you want to delete this ad?' description='A deleted advertisement can no longer be recovered.' %}
+    {% include 'partial/modal.html' with modal_id=ads.slug title=title description=description action_url=delete_ads %}
+{% endwith %}

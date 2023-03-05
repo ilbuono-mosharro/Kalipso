@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}sign_up{% endblock %}
+{% block description %}sign_up{% endblock %}
+{% block keywords %}sign_up{% endblock %}
+{% block ogtitle %}sign_up{% endblock %}
+{% block ogdescription %}sign_up{% endblock %}
+{% block javascript %}
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/wishlist.js' %}"></script>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-lg-4 mb-5">
+            {% include 'accounts/dashboard/partial/sidebar_tab.html' %}
+        </div>
+        <div class="col-lg-8 text-white">
+            <h2 class="mb-4">Wishlist ({{ announcements|length }})</h2>
+            <div class="row">
+                {% for ads in announcements %}
+                    <div class="col-12">
+                        {% include 'ads/partial/card.html' %}
+                    </div>
+                {% empty %}
+                    {% include 'partial/no_result_found.html' %}
+                {% endfor %}
+                <div class="col-12">
+                    {% include 'partial/pagination.html' with page_obj=announcements %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

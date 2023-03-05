@@ -1,0 +1,14 @@
+{% load query_helpers %}
+<div class="list-group card-background mb-4">
+    <h5 class="list-group-item list-group-item-action border-0 card-background">Transmission</h5>
+    {% for value, label in form.transmissions.field.choices %}
+        <a href="{% url 'ads:announcements' %}{% relative_url 'transmissions' value request.GET %}{% if category and not subcategory %}&categories={{ category.slug }}{% elif subcategory %}&categories={{ subcategory.slug }}{% endif %}"
+           class="list-group-item list-group-item-action border-0 card-background">
+            {% if form.transmissions.value == value or not form.transmissions.value and forloop.counter0 == 0 %}
+                <i class="bi bi-check-circle-fill"></i>
+            {% else %}
+                <i class="bi bi-circle"></i>
+            {% endif %} {% if label == "Select transmission" %}All{% else %}{{ label }}{% endif %}
+        </a>
+    {% endfor %}
+</div>

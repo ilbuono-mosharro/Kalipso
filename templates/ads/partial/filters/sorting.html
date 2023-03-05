@@ -1,0 +1,25 @@
+{% load query_helpers %}
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle card-background" type="button"
+            data-bs-toggle="dropdown" aria-expanded="false">
+        {% if form.sorting.value == "-created_at" %}
+            Newest
+        {% elif form.sorting.value == "price" %}
+            Price: Low - High
+        {% elif form.sorting.value == "-price" %}
+            Price: Hight - Low
+        {% else %}
+            Newest
+        {% endif %}
+    </button>
+    <ul class="dropdown-menu dropdown-menu-dark">
+        {% for value, label in form.sorting.field.choices %}
+            <li>
+                <a href="{% url 'ads:announcements' %}{% relative_url 'sorting' value request.GET %}{% if category and not subcategory %}&categories={{ category.slug }}{% elif subcategory %}&categories={{ subcategory.slug }}{% endif %}"
+                   class="dropdown-item {% if form.sorting.value == value %}active{% endif %}">
+                    {{ label }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>

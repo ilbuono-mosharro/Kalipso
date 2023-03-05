@@ -1,0 +1,20 @@
+<div class="card card-background mb-4" id="list-item-2">
+    <div class="card-body">
+        <h4 class="card-title mb-4"><i class="bi bi-cash-stack"></i> Price
+            <span class="extra-small" style="display: none" id="price-info">
+                {% if section == "add_auto" or section == "update_auto_ad" or section == "add_moto" or section == "update_moto_ad" %}
+                    (price for one day)
+                {% endif %}
+                {% if section == "add_property" or section == "update_property_ad" or section == "add_apartments" or section == "update_apartments_ad" %}
+                    (price for one month)
+                {% endif %}
+                {% if section == "add_job" or section == "update_job_ad" %}(price for one hour){% endif %}
+            </span>
+        </h4>
+        <div class="input-group input-group-lg mb-3">
+            {{ form.price }}
+            <span class="input-group-text card-background"><i class="bi bi-currency-dollar"></i></span>
+            <span class="text-danger">{{ form.price.errors }}</span>
+        </div>
+    </div>
+</div>

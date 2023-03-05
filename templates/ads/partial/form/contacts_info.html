@@ -1,0 +1,40 @@
+<div class="card card-background mb-4" id="list-item-5">
+    <div class="card-body">
+        <h4 class="card-title"><i class="bi bi-telephone-inbound"></i> Contacts</h4>
+        <p class="mb-4">You can change this data directly from your profile.</p>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="floatingInputDisabled"
+                   placeholder="{{ request.user.get_full_name }}"
+                   value="{{ request.user.get_full_name }}" disabled>
+            <label for="floatingInputDisabled">Full Name</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="floatingInputDisabled"
+                   placeholder="{{ request.user.email }}"
+                   value="{{ request.user.email }}" disabled>
+            <label for="floatingInputDisabled">Email</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="floatingInputDisabled"
+                   placeholder="{{ request.user.user_profile_related.phone }}"
+                   value="{{ request.user.user_profile_related.phone }}" disabled>
+            <label for="floatingInputDisabled">Phone Number</label>
+        </div>
+        <div class="mb-3">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox"
+                       value="{{ request.user.user_profile_related.hidden_phone }}"
+                       id="flexCheckCheckedDisabled"
+                       {% if request.user.user_profile_related.hidden_phone %}checked{% endif %} disabled>
+                <label class="form-check-label" for="flexCheckCheckedDisabled">
+                    Is phone number hidden -
+                    {% if request.user.user_profile_related.hidden_phone %}
+                        (No)
+                    {% else %}
+                        (Yes)
+                    {% endif %}
+                </label>
+            </div>
+        </div>
+    </div>
+</div>

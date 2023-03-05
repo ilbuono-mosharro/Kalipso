@@ -1,0 +1,330 @@
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Roboto', sans-serif;
+}
+
+.pt-6 {
+  padding-top: 6rem !important;
+}
+
+.bg-yellow {
+  background: #F5A300;
+}
+
+.c-bg-yellow {
+  color: #F5A300;
+}
+
+.bg-mint {
+  background: #05B384;
+}
+
+.c-mint {
+  color: #05B384;
+}
+
+.bg-purple {
+  background: #752EB2;
+}
+
+.c-purple {
+  color: #752EB2;
+}
+
+.bg-rose {
+  background: #FF475A;
+}
+
+.c-rose {
+  color: #FF475A;
+}
+
+.fs75 {
+  font-size: 0.75rem !important;
+}
+
+.carousel-indicators-custom {
+  position: relative;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  display: flex;
+  padding: 0;
+  justify-content: start;
+  margin-right: 0;
+  margin-bottom: 1rem;
+  margin-left: 0;
+  list-style: none;
+}
+
+.carousel-indicators-custom [data-bs-target] {
+  width: 99px;
+  height: 50px;
+
+}
+
+.list-mr-02 {
+   margin-right: -0.1rem !important;
+}
+.list-mr-016 {
+    margin-right: 0.16rem !important;
+}
+.list-group-item.border-left-active {
+  border-left: 3px solid;
+  border-left-color: #ffffff !important;
+}
+
+.body-background {
+  background: #1F1B2D;
+}
+
+.btn-orange {
+    --bs-btn-bg: #ff7b72;
+    --bs-btn-border-color: #ff7b72;
+    --bs-btn-hover-bg: #ff7b72;
+    --bs-btn-hover-border-color: #ff7b72;
+    --bs-btn-active-bg: #ff7b72;
+    --bs-btn-active-border-color: #ff7b72;
+    --bs-btn-disabled-bg: #ff7b72;
+    --bs-btn-disabled-border-color: #ff7b72;
+}
+
+.btn-outline-orange {
+    --bs-btn-color: #ff7b72;
+    --bs-btn-border-color: #ff7b72;
+    --bs-btn-hover-bg: #ff7b72;
+    --bs-btn-hover-border-color: #ff7b72;
+    --bs-btn-focus-shadow-rgb: none;
+    --bs-btn-active-bg: #ff7b72;
+    --bs-btn-active-border-color: #ff7b72;
+    --bs-btn-active-shadow: none;
+    --bs-btn-disabled-bg: #ff7b72;
+    --bs-btn-disabled-border-color: #ff7b72;
+}
+
+.pagination {
+    --bs-pagination-color: white;
+    --bs-pagination-bg: #282435;
+    --bs-pagination-border-color: #484553;
+    --bs-pagination-hover-color: #282435;
+    --bs-pagination-hover-border-color: #484553;
+    --bs-pagination-focus-color: #282435;
+    --bs-pagination-active-bg: #ff7b72;
+    --bs-pagination-active-border-color: #ff7b72;
+    --bs-pagination-focus-box-shadow: none;
+}
+
+.card-background {
+    border-color: #484553 !important;
+    background-color: #282435 !important;
+    color: #fff;
+}
+
+.card-background-sign {
+    border-color: #484553 !important;
+    background-color: #282435 !important;
+}
+
+input[type=text], input[type=email], input[type=password], input[type=number], input[type=file], textarea {
+  background-color: #282435 !important;
+  color: white;
+}
+input::placeholder {
+    color: #94929a !important;
+    border-color: #484553 !important;
+}
+.form-control, .form-control:focus, .form-select:focus {
+    box-shadow: none;
+    border-color: #484553 !important;
+    color: white;
+}
+.border-color-cs {
+    border-color: #484553 !important;
+}
+.select-field {
+    border-color: #484553 !important;
+    background-color: #282435 !important;
+    color: white;
+    --bs-form-select-bg-img: url('/static/img/chevret.svg')
+}
+.list-group-item-check:checked + .list-group-item {
+    color: white !important;
+    background-color: #ff7b72 !important;
+}
+
+.flex-fill-cs {
+    flex: 0.4 0.4 auto!important;
+}
+
+select option {
+    background-color: #282435 !important;
+    color: white!important;;
+}
+.card-icon {
+    background: #1f1b2d !important;
+    color: white;
+}
+.list-group-item-action:focus, .list-group-item-action:hover {
+    color: white !important;
+    background-color: var(--bs-dropdown-link-hover-bg) !important;
+}
+
+.list-group-item-check {
+  position: absolute;
+  clip: rect(0, 0, 0, 0);
+}
+
+.list-group-item-check:hover + .list-group-item {
+  background-color: var(--bs-light);
+}
+
+.list-group-item-check:checked + .list-group-item {
+  color: #fff;
+  background-color: var(--bs-blue);
+}
+
+.list-group-item-check[disabled] + .list-group-item,
+.list-group-item-check:disabled + .list-group-item {
+  pointer-events: none;
+  filter: none;
+  opacity: .5;
+}
+
+.list-group-checkable .list-group-item {
+  cursor: pointer;
+}
+.dropdown-three-dots.dropdown-toggle::after {
+    content: none !important;
+}
+.card-image {
+    height: 202px;
+    object-fit: cover;
+}
+
+.price-dropdown-menu {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.phorne {
+    display: none;
+}
+.h-500 {
+    height: 500px
+}
+
+/* width */
+.myscrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+.myscrollbar::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+.myscrollbar::-webkit-scrollbar-thumb {
+  background: #999;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+.myscrollbar::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}
+.extra-small {
+    font-size: .775em;
+}
+.mt-6 {
+    margin-top: 3.531rem!important;
+}
+
+.py-65 {
+    padding-top: 6rem!important;
+    padding-bottom: 5rem!important;
+}
+
+.list-group-item.active {
+    background-color: var(--bs-list-group-active-bg) !important;
+}
+.top-custom {
+    top: 60px !important;
+}
+
+.ms-minus-3 {
+    margin-left: -3rem!important;
+}
+
+.rate {
+    color: #00aa6c !important;
+    direction: rtl;
+    display: inline-block;
+}
+
+.rate input[type=radio] {
+    display: none
+}
+
+.rate label {
+    color: #bbb;
+    font-size: 18px;
+    padding: 0;
+    cursor: pointer;
+    -webkit-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out
+}
+
+.rate:hover, .rate label:hover ~ label, .rate input[type=radio]:checked ~ label {
+    color: #00aa6c;
+}
+
+.color-text-dropdown {
+    color: #dee2e6;
+}
+
+.card-image-detail {
+    height: 401px;
+    object-fit: cover;
+}
+
+.active-chat {
+    background: #0d6efd;
+}
+
+@media (min-width: 768px) {
+    .carousel-controls-prev-next {
+      bottom: 140px;
+      width: 11%;
+    }
+    .border-right-end {
+        border-right: var(--bs-border-width) var(--bs-border-style);
+    }
+    .me-18 {
+        margin-right: 18rem!important;
+    }
+    .ms-15 {
+    margin-left: 15rem!important;
+}
+}
+@media (max-width: 768px) {
+    .w-768 {
+        width: 100% !important;
+    }
+}
+@media (max-width: 575.98px) {
+    .card-image-detail {
+        height: 206px;
+        object-fit: cover;
+    }
+    .carousel-indicators-custom [data-bs-target] {
+        width: 86px;
+    }
+}
+@media (min-width: 500px) and (max-width: 768px) {
+    .card-image-detail {
+        height: 310px;
+        object-fit: cover;
+    }
+}

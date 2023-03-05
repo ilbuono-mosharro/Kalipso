@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-background">
+                <div class="card-body">
+                    <div class="row">
+                        {% include 'chat/partial/sidechat.html' %}
+                        <div class="col-md-6 col-lg-7 col-xl-8 d-flex align-items-center">
+                            <div class="d-flex flex-column mx-auto d-none d-md-block">
+                                <div class="text-center">
+                                    <i class="bi bi-chat-square-text display-1"></i>
+                                </div>
+                                <div class="text-center">
+                                    <h5>Your Messages</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

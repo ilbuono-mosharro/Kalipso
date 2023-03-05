@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}sign_up{% endblock %}
+{% block description %}sign_up{% endblock %}
+{% block keywords %}sign_up{% endblock %}
+{% block ogtitle %}sign_up{% endblock %}
+{% block ogdescription %}sign_up{% endblock %}
+{% block content %}
+    <div class="row g-lg-5 justify-content-center">
+        <div class="col-12">
+            <div class="card card-background-sign">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-md-6 d-none d-md-block d-lg-block d-xl-block d-xxl-block">
+                            <div class="d-flex flex-column mb-3 border-right-end align-items-center text-white border-color-cs">
+                                <div class="p-2">
+                                    <h1 class="h3">Join Classafield.</h1>
+                                    <h2 class="h3">Get premium benefits:</h2>
+                                    <ul class="list-unstyled text-start">
+                                        <li>
+                                            <i class="bi bi-check-circle-fill"></i> Add and promote your listings
+                                        </li>
+                                        <li>
+                                            <i class="bi bi-check-circle-fill"></i> Easily manage your wishlist
+                                        </li>
+                                        <li>
+                                            <i class="bi bi-check-circle-fill"></i> Leave reviews
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="p-2">
+                                    <img src="{% static 'img/sign-up.svg' %}" alt="" height="292"
+                                         class="mx-auto w-100">
+                                </div>
+                                <div class="p-2">Already have an account?
+                                    <a href="{% url 'login' %}" class="text-white">Sign in</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 text-white">
+                            <h2>Register</h2>
+                            <p>Create your account to start selling and buying.</p>
+                            <!-- Form -->
+                            <form method="post" action="{% url 'accounts:sign_up' %}" autocomplete="off">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    {{ form.username }}
+                                    <span class="ms-2">{{ form.username.help_text }}</span>
+                                    <span class="text-danger">{{ form.username.errors }}</span>
+                                </div>
+                                <div class="mb-3">
+                                    {{ form.email }}
+                                    <span class="text-danger">{{ form.email.errors }}</span>
+                                </div>
+                                <div class="mb-3">
+                                    {{ form.password1 }}
+                                    {{ form.password1.help_text }}
+                                </div>
+                                <div class="mb-3">
+                                    {{ form.password2 }}
+                                    <span class="ms-2">{{ form.password2.help_text }}</span>
+                                    <span class="text-danger">{{ form.password2.errors }}</span>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="list-group list-group-checkable border-0 w-auto list-group-horizontal justify-content-between gap-3">
+                                        {% for radio in form.u_type %}
+                                            {% if forloop.counter0 > 0 %}
+                                                {{ radio.tag }}
+                                                <label class="list-group-item rounded-3 p-3 w-50 card-background"
+                                                       for="{{ radio.id_for_label }}">
+                                                    {{ radio.choice_label }}
+                                                    <span class="d-block small">
+                                                        {% if radio.choice_label == "Individual Person" %}
+                                                            I am a Individual Person
+                                                        {% else %}
+                                                            After sign up you can set up your business profile
+                                                        {% endif %}
+                                                    </span>
+                                                </label>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        {{ form.terms_and_privacy }}
+                                        <label class="form-check-label" for="id_terms_and_privacy">
+                                            I agree to the
+                                            <span>
+                                                <a href="{% url 'pages:terms' %}" class="text-primary">
+                                                    Terms of Service
+                                                </a>and
+                                                <a href="{% url 'pages:privacy' %}" class="text-primary">Privacy Policy.
+                                                </a>
+                                            </span>
+                                        </label>
+                                        {{ form.terms_and_privacy.errors }}
+                                    </div>
+                                </div>
+                                <!-- Button -->
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary">
+                                        Create Free Account
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

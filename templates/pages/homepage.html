@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Albania{% endblock %}
+{% block description %}Albania{% endblock %}
+{% block keywords %}Albania{% endblock %}
+{% block ogtitle %}Albania{% endblock %}
+{% block ogdescription %}Albania{% endblock %}
+{% block content %}
+    <section class="first-s">
+        <div class="my-4 text-center border-bottom border-color-cs">
+            {% include 'ads/partial/filters/search_form.html' with form=form %}
+            <h1 class="display-4 fw-bold mb-5 text-white">Explore our sections</h1>
+            <div class="row">
+                {% for category in categories %}
+                    {% include 'categories/partial/card.html' %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <section class="second-s py-5">
+        <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+            <div class="col-10 col-sm-8 col-lg-6">
+                <img src="{% static 'img/teams.svg' %}" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes"
+                     width="400" height="400" loading="lazy">
+            </div>
+            <div class="col-lg-6 text-white">
+                <h1 class="display-5 fw-bold lh-1 mb-3">The #1 classifieds site to find anything</h1>
+                <p class="fs-5">
+                    Classified Ads is a platform for online buying/selling of goods and services for both individuals
+                    and businesses.
+                    Free classified ads for cars, jobs, real estate, and everything else.
+                    Find what you are looking for or create your own ad for free!
+                </p>
+                <a href="{% url 'categories:categories_list' %}" class="btn btn-primary w-100">Post ads</a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

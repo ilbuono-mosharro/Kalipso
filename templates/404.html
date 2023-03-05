@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Server error 404{% endblock %}
+{% block description %}Server error 404{% endblock %}
+{% block keywords %}Server error 404{% endblock %}
+{% block ogtitle %}Server error 404{% endblock %}
+{% block ogdescription %}Server error 404{% endblock %}
+{% block content %}
+    <section id="error-404" class="px-xxl-4 px-xl-4 px-lg-4 mt-5">
+        <div class="text-center mb-5">
+            <img src="{% static 'img/error_404.svg' %}" class="img-fluid errors-page" alt="Responsive image">
+            <h1 class="font-lora">Oops!</h1>
+            <h2 class="font-lora h3">The page you are looking for does not exist!</h2>
+        </div>
+    </section>
+{% endblock %}

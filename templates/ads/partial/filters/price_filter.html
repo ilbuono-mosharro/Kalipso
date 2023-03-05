@@ -1,0 +1,44 @@
+{% load query_helpers %}
+<div class="list-group card-background mb-4">
+    <h5 class="list-group-item list-group-item-action border-0 card-background">Price range</h5>
+    <div class="dropdown list-group-item list-group-item-action border-0 card-background">
+        <button class="btn btn-secondary dropdown-toggle card-background w-100" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false">
+            {% if form.price_min.value %}
+                {{ form.price_min.value }}
+            {% else %}
+                From
+            {% endif %}
+        </button>
+        <ul class="dropdown-menu dropdown-menu-dark price-dropdown-menu">
+            {% for value, label in form.price_min.field.choices %}
+                <li>
+                    <a href="{% url 'ads:announcements' %}{% relative_url 'price_min' value request.GET %}{% if category and not subcategory %}&categories={{ category.slug }}{% elif subcategory %}&categories={{ subcategory.slug }}{% endif %}"
+                       class="dropdown-item {% if form.price_min.value == value %}active{% endif %}">
+                        {{ label }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="dropdown list-group-item list-group-item-action border-0 card-background">
+        <button class="btn btn-secondary dropdown-toggle card-background w-100" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+            {% if form.price_max.value %}
+                {{ form.price_max.value }}
+            {% else %}
+                To
+            {% endif %}
+        </button>
+        <ul class="dropdown-menu dropdown-menu-dark price-dropdown-menu">
+            {% for value, label in form.price_max.field.choices %}
+                <li>
+                    <a href="{% url 'ads:announcements' %}{% relative_url 'price_max' value request.GET %}{% if category and not subcategory %}&categories={{ category.slug }}{% elif subcategory %}&categories={{ subcategory.slug }}{% endif %}"
+                       class="dropdown-item {% if form.price_max.value == value %}active{% endif %}">
+                        {{ label }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

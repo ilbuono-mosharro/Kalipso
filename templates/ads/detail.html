@@ -1,0 +1,289 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block javascript %}
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/wishlist.js' %}"></script>
+    {% if announcement.profile.phone %}
+        <script>
+            const phoneNumber = {{ announcement.profile.phone }};
+            $("#phone-number").click(function () {
+                $(this).text(phoneNumber);
+            });
+        </script>
+    {% endif %}
+{% endblock %}
+{% block content %}
+    <section id="announcement_detail">
+        <h1 class="h2 mb-3 text-white">{{ announcement.title }}</h1>
+        <div class="d-block d-sm-block d-md-block d-lg-none text-white">
+            <div class="d-flex flex-row mb-3 d-flex justify-content-between">
+                <div>
+                    {% if announcement.standard %}
+                        <div class="badge bg-mint">
+                            {{ announcement.standard.get_condition_display }}
+                        </div>
+                    {% endif %}
+                    {% if announcement.standard.auto or announcement.standard.moto or announcement.properties %}
+                        <div class="badge bg-yellow">
+                            {{ announcement.properties.get_ad_type_display }}{{ announcement.standard.auto.get_ad_type_display }}{{ announcement.standard.moto.get_ad_type_display }}
+                        </div>
+                    {% endif %}
+                </div>
+                <div>
+                    {% url 'ads:ann_wishlist_detail' announcement.id as ann_wishlist_detail %}
+                    {% include 'ads/partial/wishlist_form.html' with url=ann_wishlist_detail ads=announcement %}
+                </div>
+            </div>
+            <h3 class="mb-3">
+                ${{ announcement.price|floatformat:"-3g" }}
+                {% if announcement.jobs %}<span class="extra-small">/ hour</span>{% endif %}
+                {% if announcement.standard.auto.ad_type == "RE" or announcement.standard.moto.ad_type == "RE" %}
+                    <span class="extra-small">/ day</span>
+                {% endif %}
+                {% if announcement.properties.ad_type == "RE" %}<span class="extra-small">/ month</span>{% endif %}
+            </h3>
+            <div class="d-flex flex-row mb-3">
+                <div class="me-2"><i class="bi bi-geo-alt-fill"></i> {{ announcement.city }}</div>
+                <div class="me-2 border-start border-color-cs"></div>
+                <div>
+                    Published: {{ announcement.created_at|date:"M d, Y" }} {{ announcement.created_at|time:"H:i" }}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+                {% if announcement.announcement_images.count > 0 %}
+                    <div id="carouselExampleIndicators" class="carousel slide mb-4">
+                        <div class="carousel-inner rounded-3">
+                            {% for image in announcement.announcement_images.all %}
+                                <div class="carousel-item {% if forloop.counter0 == 0 %}active{% endif %}">
+                                    <img src="{{ image.image.url }}" class="d-block w-100 card-image-detail" alt="...">
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <button class="carousel-control-prev carousel-controls-prev-next d-none d-sm-none d-md-block"
+                                type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                            <span aria-hidden="true"><i class="bi bi-arrow-left-circle-fill fs-3 text-white"></i></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next carousel-controls-prev-next d-none d-sm-none d-md-block"
+                                type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                            <span aria-hidden="true"><i
+                                    class="bi bi-arrow-right-circle-fill fs-3 text-white"></i></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                        <div class="carousel-indicators carousel-indicators-custom d-flex align-content-start flex-wrap">
+                            {% for image in announcement.announcement_images.all %}
+                                <button type="button" data-bs-target="#carouselExampleIndicators"
+                                        data-bs-slide-to="{{ forloop.counter0 }}"
+                                        {% if forloop.counter0 == 0 %}class="active" aria-current="true"{% endif %}
+                                        aria-label="Slide {{ forloop.counter0 }}">
+                                    <img src="{{ image.image.url }}" class="d-block w-100 rounded" alt="..." width="96"
+                                         height="64">
+                                </button>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% else %}
+                    <img src="{% static 'img/no_image.svg' %}" class="d-block" alt="..." width="736" height="491">
+                {% endif %}
+                {% if announcement.standard.auto or announcement.standard.moto or announcement.properties or announcement.jobs %}
+                    <h3 class="mb-3 text-white">Specifications</h3>
+                    <ul class="list-unstyled row text-white mb-4">
+                        {% if announcement.standard.auto or announcement.standard.moto %}
+                            <li class="col-6 mb-1">
+                                <strong>Make:</strong>
+                                <span class="ms-1">{{ announcement.standard.auto.make }}{{ announcement.standard.moto.make }}</span>
+                            </li>
+                            <li class="col-6 mb-1">
+                                <strong>Kms driven:</strong>
+                                <span class="ms-1">{{ announcement.standard.auto.kms_driven }}{{ announcement.standard.moto.kms_driven }} km</span>
+                            </li>
+                            <li class="col-6 mb-1">
+                                <strong>Transmission:</strong>
+                                <span class="ms-1">{{ announcement.standard.auto.get_transmission_display }}{{ announcement.standard.moto.get_transmission_display }}</span>
+                            </li>
+                            <li class="col-6 mb-1">
+                                <strong>First registration:</strong>
+                                <span class="ms-1">{{ announcement.standard.auto.first_registration }}{{ announcement.standard.moto.first_registration }}</span>
+                            </li>
+                            <li class="col-6 mb-1">
+                                <strong>Fuel:</strong>
+                                <span class="ms-1">{{ announcement.standard.auto.get_fuel_display }}{{ announcement.standard.moto.get_fuel_display }}</span>
+                            </li>
+                            <li class="col-6 mb-1">
+                                <strong>Consumption:</strong>
+                                <span class="ms-1">{{ announcement.standard.auto.consumption }}{{ announcement.standard.moto.consumption }}</span>
+                            </li>
+                            {% if announcement.standard.auto %}
+                                <li class="col-6 mb-1">
+                                    <strong>Drive type:</strong>
+                                    <span class="ms-1">{{ announcement.standard.auto.drive_type }}</span>
+                                </li>
+                                <li class="col-6 mb-1">
+                                    <strong>Doors:</strong>
+                                    <span class="ms-1">{{ announcement.standard.auto.doors }} doors</span>
+                                </li>
+                                <li class="col-6 mb-1">
+                                    <strong>Seats:</strong>
+                                    <span class="ms-1">{{ announcement.standard.auto.seats }}</span>
+                                </li>
+                            {% endif %}
+                        {% endif %}
+                        {% if announcement.properties.house %}
+                            <li class="col-6 mb-1">
+                                <strong>Bedrooms:</strong>
+                                <span class="ms-1">{{ announcement.properties.house.bedrooms }}</span>
+                            </li>
+                            <li class="col-6 mb-1">
+                                <strong>Bathrooms:</strong>
+                                <span class="ms-1">{{ announcement.properties.house.bathrooms }}</span>
+                            </li>
+                            <li class="col-6 mb-1">
+                                <strong>Square feet:</strong>
+                                <span class="ms-1">{{ announcement.properties.square_feet }}</span>
+                            </li>
+                        {% endif %}
+                        {% if announcement.properties and not announcement.properties.house %}
+                            <li class="col-6 mb-1">
+                                <strong>Square feet:</strong>
+                                <span class="ms-1">{{ announcement.properties.square_feet }}</span>
+                            </li>
+                        {% endif %}
+                        {% if announcement.jobs %}
+                            <li class="col-6 mb-1">
+                                <strong>Schedule:</strong>
+                                <span class="ms-1">{{ announcement.jobs.get_schedule_display }}</span>
+                            </li>
+                            <li class="col-6 mb-1">
+                                <strong>Level:</strong>
+                                <span class="ms-1">{{ announcement.jobs.get_level_display }}</span>
+                            </li>
+                        {% endif %}
+                    </ul>
+                {% endif %}
+                <h4 class="text-white mb-3">Seller's Description</h4>
+                <p class="text-white mb-5">{{ announcement.description }}</p>
+                <div class="d-flex flex-row mb-3">
+                    <div class="me-2 text-white">Ad number: {{ announcement.unique_code }}</div>
+                    <div class="me-2 border-start border-color-cs"></div>
+                    <div class="text-white">Views: {{ announcement.visits }}</div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card border-0 card-background">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="d-none d-lg-block d-xl-block d-xxl-block">
+                                    <div class="d-flex flex-row mb-3 d-flex justify-content-between">
+                                        <div>
+                                            {% if announcement.standard %}
+                                                <div class="badge bg-mint">
+                                                    {{ announcement.standard.get_condition_display }}
+                                                </div>
+                                            {% endif %}
+                                            {% if announcement.standard.auto or announcement.standard.moto or announcement.properties %}
+                                                <div class="badge bg-yellow">
+                                                    {{ announcement.properties.get_ad_type_display }}{{ announcement.standard.auto.get_ad_type_display }}{{ announcement.standard.moto.get_ad_type_display }}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                        <div>
+                                            {% url 'ads:ann_wishlist_detail' announcement.id as ann_wishlist_detail %}
+                                            {% include 'ads/partial/wishlist_form.html' with url=ann_wishlist_detail ads=announcement %}
+                                        </div>
+                                    </div>
+                                    <h3 class="mb-3">
+                                        ${{ announcement.price|floatformat:"-3g" }}
+                                        {% if announcement.jobs %}<span class="extra-small">/ hour</span>{% endif %}
+                                        {% if announcement.standard.auto.ad_type == "RE" or announcement.standard.moto.ad_type == "RE" %}
+                                            <span class="extra-small">/ day</span>{% endif %}
+                                        {% if announcement.properties.ad_type == "RE" %}
+                                            <span class="extra-small">/ month</span>
+                                        {% endif %}
+                                    </h3>
+                                    <div class="d-flex flex-row mb-3">
+                                        <div class="me-2"><i class="bi bi-geo-alt-fill"></i> {{ announcement.city }}
+                                        </div>
+                                        <div class="me-2 border-start border-color-cs"></div>
+                                        <div>
+                                            Published: {{ announcement.created_at|date:"M d, Y" }}
+                                            {{ announcement.created_at|time:"H:i" }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card card-background border-0">
+                                    <div class="card-body text-white p-0">
+                                        <p class="card-text">
+                                            {{ announcement.profile.user.get_u_type_display }}
+                                        </p>
+                                        <a href="{% url 'accounts:public_profile' announcement.profile.unique_code %}"
+                                           class="text-decoration-none text-white">
+                                            <div class="d-flex mb-2">
+                                                <div class="flex-shrink-0">
+                                                    <img src="{% if announcement.profile.avatar %}{{ announcement.profile.avatar.url }}{% else %}{% static 'img/male_avatar.svg' %}{% endif %}"
+                                                         class="rounded-4" alt="..." height="50" width="50">
+                                                </div>
+                                                <div class="flex-grow-1 ms-2">
+                                                    <h5 class="mb-0">{{ announcement.profile.user.get_full_name }}</h5>
+                                                    <ul class="list-unstyled list-inline-item mb-3">
+                                                        {% include 'reviews/partial/review_rating.html' with rating=announcement.profile.get_reviews_avg.review_avg %}
+                                                        <li class="list-inline-item small">
+                                                            ({{ announcement.profile.get_reviews_avg.review_number }}
+                                                            review{{ announcement.profile.get_reviews_avg.review_number|pluralize }})
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <div class="mb-3">
+                                            <a href="{% url 'accounts:public_profile' announcement.profile.unique_code %}"
+                                               class="fw-semibold text-white text-decoration-none">
+                                                Other ads by this seller
+                                            </a>
+                                        </div>
+                                        {% if announcement.profile.phone %}
+                                            <button type="button"
+                                                    class="btn btn-outline-primary btn-outline-orange btn-lg mb-4"
+                                                    id="phonenumber">
+                                                +355 <span id="phone-number">****** - Click to show</span>
+                                            </button>
+                                        {% endif %}
+                                        {% if request.user.is_authenticated %}
+                                            {% if request.user != announcement.profile.user %}
+                                                <button class="btn btn btn-primary btn-lg fw-bold mb-4" type="button"
+                                                        data-bs-toggle="collapse" data-bs-target="#collapseExample"
+                                                        aria-expanded="false" aria-controls="collapseExample">
+                                                    <i class="bi bi-chat-left"></i> Send message
+                                                </button>
+                                                <div class="collapse" id="collapseExample">
+                                                    <form method="post"
+                                                          action="{% url 'chat:contact_seller' announcement.slug %}">
+                                                        {% csrf_token %}
+                                                        {{ form.content }}
+                                                        <button type="submit"
+                                                                class="btn btn-outline-primary fw-bold mt-4">
+                                                            Submit
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            {% else %}
+                                                <h5>This is your ad.</h5>
+                                            {% endif %}
+                                        {% else %}
+                                            <a href="{% url 'login' %}?next={{ request.path }}"
+                                               class="btn btn btn-primary btn-lg fw-bold mb-4">
+                                                <i class="bi bi-chat-left"></i> Send message
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

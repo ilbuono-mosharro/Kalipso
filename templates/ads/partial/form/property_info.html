@@ -1,0 +1,28 @@
+<div class="card card-background mb-4" id="list-item-3">
+    <div class="card-body">
+        <h4 class="card-title mb-4"><i class="bi bi-building"></i> Property information</h4>
+        {% if section == "add_apartments" %}
+            <div class="mb-3">
+                {% if section == "update_property_ad" or section == "update_apartments_ad" %}
+                    {{ form.bedrooms.label_tag }}
+                {% endif %}
+                {{ form.bedrooms }}
+                <span class="text-danger">{{ form.bedrooms.errors }}</span>
+            </div>
+            <div class="mb-3">
+                {% if section == "update_property_ad" or section == "update_apartments_ad" %}
+                    {{ form.bathrooms.label_tag }}
+                {% endif %}
+                {{ form.bathrooms }}
+                <span class="text-danger">{{ form.bathrooms.errors }}</span>
+            </div>
+        {% endif %}
+        <div class="mb-3">
+            {% if section == "update_property_ad" or section == "update_apartments_ad" %}
+                {{ form.square_feet.label_tag }}
+            {% endif %}
+            {{ form.square_feet }}
+            <span class="text-danger">{{ form.square_feet.errors }}</span>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,55 @@
+{% load query_helpers %}
+{% if page_obj %}
+    <nav aria-label="Page navigation example">
+        <ul class="pagination py-5">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link"
+                       href="{% relative_url 'page' page_obj.previous_page_number request.GET %}"
+                       aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                {% if page_obj.number > 4 %}
+                    <li class="page-item">
+                        <a class="page-link" href="{% relative_url 'page' 1 request.GET %}">1</a>
+                        {% if page_obj.number > 5 %}
+                            <li class="page-item">
+                                <span class="page-link">...</span>
+                            </li>
+                        {% endif %}
+                {% endif %}
+            {% endif %}
+            {% for page_number in page_obj.paginator.page_range %}
+                {% if page_number <= page_obj.number|add:3 and page_number >= page_obj.number|add:-3 %}
+                    <li class="page-item {% if page_number == page_obj.number %}active{% endif %}">
+                        <a class="page-link current"
+                           {% if page_number == page_obj.number %}aria-current="page"{% endif %}
+                           href="{% relative_url 'page' page_number request.GET %}">
+                            {{ page_number }}
+                        </a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+                {% if page_obj.number < page_obj.paginator.num_pages|add:'-3' %}
+                    <li class="page-item">
+                        <span class="page-link">...</span>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="{% relative_url 'page' page_obj.paginator.num_pages request.GET %}">
+                            {{ page_obj.paginator.num_pages }}
+                        </a>
+                    </li>
+                {% endif %}
+                <li class="page-item">
+                    <a class="page-link"
+                       href="{% relative_url 'page' page_obj.next_page_number request.GET %}"
+                       aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endif %}

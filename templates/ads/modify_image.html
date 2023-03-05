@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-12 col-12">
+            <div class="card card-background">
+                <!-- card header  -->
+                <div class="card-header bg-white py-4 card-background">
+                    <h4 class="mb-0">Update Image</h4>
+                </div>
+                <div class="card-body">
+                    {% if image.image %}
+                        <figure class="figure">
+                            <img src="{{ image.image.url }}" class="rounded mb-3" alt="..." width="200" height="150">
+                            <figcaption class="figure-caption">
+                                Actual Image
+                            </figcaption>
+                        </figure>
+                    {% endif %}
+                    <form action="{% url 'ads:modify_image_announcement' image.id %}" method="post"
+                          enctype="multipart/form-data" autocomplete="off">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-success">Update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

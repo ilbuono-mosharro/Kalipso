@@ -1,0 +1,26 @@
+<!-- Modal -->
+<div class="modal fade" id="exampleModal-{{ modal_id }}" tabindex="-1"
+     aria-labelledby="exampleModalLabel-{{ modal_id }}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content card-background">
+            <div class="modal-header border-color-cs">
+                <h1 class="modal-title fs-5" id="exampleModalLabel-{{ modal_id }}">
+                    {{ title }} {{ optional_text }} {{ optional_text_1 }}
+                </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {{ description }}
+            </div>
+            <div class="modal-footer border-color-cs">
+                <form method="post" action="{{ action_url }}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">
+                        Yes
+                    </button>
+                </form>
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
