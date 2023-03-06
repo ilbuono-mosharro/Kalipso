@@ -48,3 +48,44 @@ python manage.py createsuperuser (enter username, email, password)
 python django_web_app/manage.py runserver
 
 In your web browser enter the address : http://localhost:8000 or http://127.0.0.1:8000/
+
+Screenshots:
+
+![My Image](screenshot/1.png)
+
+![My Image](screenshot/2.png)
+
+![My Image](screenshot/3.png)
+
+![My Image](screenshot/4.png)
+
+![My Image](screenshot/5.png)
+
+![My Image](screenshot/6.png)
+
+![My Image](screenshot/7.png)
+
+![My Image](screenshot/8.png)
+
+![My Image](screenshot/9.png)
+
+![My Image](screenshot/10.png)
+
+![My Image](screenshot/11.png)
+
+![My Image](screenshot/12.png)
+
+![My Image](screenshot/13.png)
+
+![My Image](screenshot/14.png)
+
+![My Image](screenshot/15.png)
+
+![My Image](screenshot/16.png)
+
+![My Image](screenshot/17.png)
+
+![My Image](screenshot/18.png)
+
+![My Image](screenshot/19.png)
+
