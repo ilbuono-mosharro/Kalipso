@@ -116,10 +116,17 @@ class UserProfileForm(forms.ModelForm):
 
         widgets = {
             'city': Select(attrs={'class': 'form-select form-select-lg select-field', 'placeholder': 'City'}),
-            'phone': NumberInput(attrs={'class': 'form-control form-control-lg', 'placeholder': 'Phone Number'}),
+            'phone': TextInput(attrs={'class': 'form-control form-control-lg', 'placeholder': 'Phone Number'}),
             'hidden_phone': CheckboxInput(attrs={'class': 'form-check-input'}),
             'age': NumberInput(attrs={'class': 'form-control form-control-lg', 'placeholder': 'Age'}),
         }
+
+    def clean_phone(self):
+        phone = self.cleaned_data['phone']
+
+        if not all(phone.isnumeric() for phone in phone):
+            raise forms.ValidationError("This field accepts only numbers.")
+        return phone
 
     def clean_age(self):
         age = self.cleaned_data.get("age")

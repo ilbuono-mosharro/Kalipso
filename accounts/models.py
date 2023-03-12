@@ -45,7 +45,7 @@ class Profile(models.Model):
         validate_image_file_extension, FileExtensionValidator(['JPEG', 'JPG', 'PNG']), validate_file_size,
     ], blank=True, null=True)
     unique_code = models.CharField(max_length=8, default=generate_unique_code, unique=True)
-    phone = models.PositiveSmallIntegerField(blank=True, null=True)
+    phone = models.CharField(max_length=9, blank=True, null=True)
     hidden_phone = models.BooleanField(default=False)
     is_complete = models.BooleanField(default=False)
     age = models.PositiveSmallIntegerField(blank=True, null=True)
